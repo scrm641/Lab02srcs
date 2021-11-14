@@ -49,3 +49,4 @@ t=linspace (to,tf,2000) ;
  % model dynamics
  xdot=[x(2);c*(x(2)^2)*cos(3*x(1))+u];
  end
+ 
