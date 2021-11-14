@@ -12,12 +12,12 @@ t=linspace (to,tf,200) ;
  options1=odeset('RelTol',0.01);
  [t,x]= ode23(@(t,x)nonlinear(t,x),t,xo,options1);
 % fclose(fileID);
- eta=1;
+ eta=3;
  xd=sin(t);
  xd1=cos(t);
  xd2=-sin(t);
  landa=1;
- F=(0.5).*(x(:,2)).^2.*cos(3.*x(:,1));
+ F=(0.5).*(x(:,2)).^2.*abs(cos(3.*x(:,1)));
  cn = 1.5; % nominal - valor medio
  s=x(:,2)-xd1+landa.*(x(:,1)-xd);
  us =-(cn.*x(:,2).^2.*cos(3.*x(:,1))) +xd2-landa.*(x(:,2)-xd1)-(F+eta).*sign(s);
@@ -34,15 +34,17 @@ t=linspace (to,tf,200) ;
  end
  function[xdot]=nonlinear(t,x)
  c = 1+1*rand(1,1); % Robustez
- eta= 1;
+ eta= 3;
  xd=sin(t);
  xd1=cos(t);
  xd2=-sin(t);
  landa=1;
- F=0.5*x(2)^2*cos(3*x(1));
- cn = 1.5; % nominal valor medio
+ F=0.5*x(2)^2*abs(cos(3*x(1)));
+ cn = 1.5;
+ fh = -(cn*(x(2)^2)*cos(3*x(1)))
+  % nominal valor medio
  s=x(2)-xd1+landa*(x(1)-xd);
- u=-(cn*(x(2)^2)*cos(3*x(1)))+xd2-landa*(x(2)-xd1)-(F+eta)*sign(s);
+ u=-fh+xd2-landa*(x(2)-xd1)-(F+eta)*sign(s);
  % model dynamics
  xdot=[x(2);c*(x(2)^2)*cos(3*x(1))+u];
  end
