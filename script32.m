@@ -1,6 +1,6 @@
 function script32()
 clc,clear
-R=dlmread('datos3.txt');
+R=dlmread('datos3.txt'); % Change this text according to the text file you want to use
 figure(1)
 hold on
 plot(R(:,1),R(:,2))
